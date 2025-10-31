@@ -35,3 +35,6 @@ end
 # Git
 symlink git/config "$HOME/.config/git/config"
 symlink git/config.user "$HOME/.config/git/config.user"
+
+# Karabiner
+symlink karabiner/karabiner.json "$HOME/.config/karabiner/karabiner.json"
