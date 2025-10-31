@@ -12,7 +12,7 @@ function symlink -a src destination
     if test -e "$destination" # File already exists at destination
         if test -L "$destination" # Destination is a symlink
             set --function existing_link (readlink "$destination")
-            if test "$destination" = "$existing_link"
+            if test "$full_src_path" = "$existing_link"
                 set_color green; echo "This symlink already exists, skipping!"; set_color normal
             else 
                 set_color red; echo "Symlink to \"$existing_link\" already exists at destination"; set_color normal
