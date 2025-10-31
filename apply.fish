@@ -6,25 +6,30 @@ set dotfiles_dir (realpath (dirname (status --current-filename)))
 
 function symlink -a src destination
     set --function full_src_path "$dotfiles_dir/$src"
+    mkdir -p (dirname "$destination")
+    echo -n "Attempting to symlink $destination -> $full_src_path: "
 
-    if not test -e "$destination"
-        echo "Symlinking $full_src_path -> $destination"
-        mkdir -p (dirname "$destination")
+    if test -e "$destination" # File already exists at destination
+        if test -L "$destination" # Destination is a symlink
+            set --function existing_link (readlink "$destination")
+            if test "$destination" = "$existing_link"
+                set_color green; echo "This symlink already exists, skipping!"; set_color normal
+            else 
+                set_color red; echo "Symlink to \"$existing_link\" already exists at destination"; set_color normal
+                ln -s -i "$full_src_path" "$destination"
+            end
+        else
+            set_color red; echo "File already exists at destination"; set_color normal
+            ln -s -i "$full_src_path" "$destination"
+        end
+    else # No file exists at destination
+        set_color green; echo "No conflict found"; set_color normal
         ln -s "$full_src_path" "$destination"
-    else 
-        echo "[WARN] Skipping symlink $full_src_path -> $destination due to already existing"
     end
 end
 
-function force_symlink -a src destination
-    set --function full_src_path "$dotfiles_dir/$src"
-    echo "Symlinking $full_src_path -> $destination with overwrite"
-    mkdir -p (dirname "$destination")
-    ln -s -i "$full_src_path" "$destination"
-end
-
 # Fish
-force_symlink fish/config.fish "$HOME/.config/fish/config.fish"
+symlink fish/config.fish "$HOME/.config/fish/config.fish"
 for f in fish/functions/*
     symlink $f "$HOME/.config/fish/functions/"(basename $f)
 end
