@@ -24,7 +24,7 @@ function force_symlink -a src destination
 end
 
 # Fish
-symlink fish/config.fish "$HOME/.config/fish/config.fish"
+force_symlink fish/config.fish "$HOME/.config/fish/config.fish"
 for f in fish/functions/*
     symlink $f "$HOME/.config/fish/functions/"(basename $f)
 end
