@@ -31,3 +31,7 @@ end
 for f in fish/conf.d/*
     symlink $f "$HOME/.config/fish/conf.d/"(basename $f)
 end
+
+# Git
+symlink git/config "$HOME/.config/git/config"
+symlink git/config.user "$HOME/.config/git/config.user"

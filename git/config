@@ -1,0 +1,61 @@
+# Please indent options with one tab when editing defaults in
+# That matches how "git config --global" edits the file.
+
+[user]
+	name = J Delaney
+
+[include]
+	path = ~/.config/git/config.user
+
+[fetch]
+	prune = true
+
+[push]
+	default = simple
+
+[core]
+	# http://stackoverflow.com/questions/18257622/why-is-git-core-preloadindex-default-value-false
+	preloadindex = true
+
+	deltabasecachelimit = 4g
+
+[help]
+	# Automatically correct and execute mistyped commands such as `git stauts`
+	autocorrect = 50
+
+[feature]
+	manyfiles = true
+
+[alias]
+	# https://stackoverflow.com/questions/7534184/git-alias-multiple-commands-and-parameters/25915221#25915221
+	undo = reset --soft HEAD^
+	redo = commit -a -c ORIG_HEAD
+
+	head = log -n 1 --pretty=format:"%H"
+
+	readd = "!git diff --name-only --cached | xargs git add && :"
+
+	parent = "!fish -c git-parent && :"
+	files-since = "!git diff --relative --name-only $(git merge-base HEAD $1) --diff-filter=d && :"
+	files-since-master = "!git files-since origin/master && :"
+	files-since-parent = "!git files-since $(git parent) && :"
+	diff-since-master = "!git diff $(git merge-base HEAD origin/master) && :"
+	diff-since-parent = "!git diff $(git merge-base HEAD $(git parent)) && :"
+	rebase-since-master = "!git rebase -i $(git merge-base HEAD origin/master) && :"
+	rebase-since-parent = "!git rebase -i $(git merge-base HEAD $(git parent)) && :"
+	log-since-master = "!git log --oneline --decorate --graph $(git merge-base HEAD origin/master)..HEAD && :"
+	log-since-parent = "!git log --oneline --decorate --graph $(git merge-base HEAD $(git parent))..HEAD && :"
+
+	fixup = "!git commit --all --fixup $1 && git rebase --autosquash -i $(git merge-base HEAD $(git parent)) && :"
+	# Commit and continue
+	cac = "!git commit --all --amend && git rebase --continue && :"
+
+	# Recent branches
+	recent = "!git branch --sort=committerdate --format='%(committerdate:relative)%09%(refname:short)' && :"
+	my-branches = "!git branch --list 'jdelaney/*' --sort=committerdate  && :"
+
+	squash = "!git reset --soft $(git merge-base HEAD origin/master) && git commit --edit --verbose && :"
+	prom = "!git pull --rebase origin master"
+
+	# Commit but stashing things first
+	sc = "!git stash --keep-index && git commit --verbose && git stash pop && :"
