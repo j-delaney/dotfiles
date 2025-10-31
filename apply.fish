@@ -10,7 +10,7 @@ function symlink -a src destination
     if not test -e "$destination"
         echo "Symlinking $full_src_path -> $destination"
         mkdir -p (dirname "$destination")
-        ln -s "$full_file_path" "$destination"
+        ln -s "$full_src_path" "$destination"
     else 
         echo "[WARN] Skipping symlink $full_src_path -> $destination due to already existing"
     end
@@ -20,7 +20,7 @@ function force_symlink -a src destination
     set --function full_src_path "$dotfiles_dir/$src"
     echo "Symlinking $full_src_path -> $destination with overwrite"
     mkdir -p (dirname "$destination")
-    ln -s -i "$full_file_path" "$destination"
+    ln -s -i "$full_src_path" "$destination"
 end
 
 # Fish
