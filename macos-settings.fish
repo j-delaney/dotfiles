@@ -1,5 +1,8 @@
 #!/usr/bin/env fish
 
+# References:
+# - https://github.com/mathiasbynens/dotfiles/blob/main/.macos
+
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
