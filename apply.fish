@@ -52,3 +52,6 @@ set_color --bold; echo "# Hammerspoon"; set_color normal
 for f in hammerspoon/*
     symlink $f "$HOME/.hammerspoon/"(basename $f)
 end
+
+# Homebrew packages
+xargs brew install < brew.txt
