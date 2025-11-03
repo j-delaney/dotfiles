@@ -476,22 +476,6 @@
                                         "value": 1
                                     }
                                 ],
-                                "description": "F2 -> Sublime Text",
-                                "from": {
-                                    "key_code": "f2",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "shell_command": "open -a \"/Applications/Sublime Text.app\"" }],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "caps_lock pressed",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
                                 "description": "3 -> iTerm",
                                 "from": {
                                     "key_code": "3",
