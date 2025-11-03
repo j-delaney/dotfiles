@@ -43,3 +43,8 @@ symlink git/config.user "$HOME/.config/git/config.user"
 
 # Karabiner
 symlink karabiner/karabiner.json "$HOME/.config/karabiner/karabiner.json"
+
+# Hammerspoon
+for f in hammerspoon/*
+    symlink $f "$HOME/.hammerspoon/"(basename $f)
+end
