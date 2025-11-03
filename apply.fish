@@ -29,6 +29,7 @@ function symlink -a src destination
 end
 
 # Fish
+set_color --bold; echo "# Fish"; set_color normal
 symlink fish/config.fish "$HOME/.config/fish/config.fish"
 for f in fish/functions/*
     symlink $f "$HOME/.config/fish/functions/"(basename $f)
@@ -38,13 +39,16 @@ for f in fish/conf.d/*
 end
 
 # Git
+set_color --bold; echo "# Git"; set_color normal
 symlink git/config "$HOME/.config/git/config"
 symlink git/config.user "$HOME/.config/git/config.user"
 
 # Karabiner
+set_color --bold; echo "# Karabiner"; set_color normal
 symlink karabiner/karabiner.json "$HOME/.config/karabiner/karabiner.json"
 
 # Hammerspoon
+set_color --bold; echo "# Hammerspoon"; set_color normal
 for f in hammerspoon/*
     symlink $f "$HOME/.hammerspoon/"(basename $f)
 end
