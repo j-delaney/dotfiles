@@ -540,22 +540,6 @@
                                         "value": 1
                                     }
                                 ],
-                                "description": "F1 -> Quiver",
-                                "from": {
-                                    "key_code": "f1",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "shell_command": "open -a \"/Applications/Quiver.app\"" }],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "name": "caps_lock pressed",
-                                        "type": "variable_if",
-                                        "value": 1
-                                    }
-                                ],
                                 "description": "2 -> IntelliJ IDEA",
                                 "from": {
                                     "key_code": "2",
