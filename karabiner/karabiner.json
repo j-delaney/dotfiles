@@ -8,7 +8,7 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Capslock Hyper",
+                        "description": "Hyper Arrows",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -73,7 +73,12 @@
                                 },
                                 "to": [{ "key_code": "right_arrow" }],
                                 "type": "basic"
-                            },
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Capslock Hyper",
+                        "manipulators": [
                             {
                                 "conditions": [
                                     {
@@ -717,7 +722,7 @@
                         ]
                     },
                     {
-                        "desrciption": "Tap",
+                        "description": "Tap",
                         "manipulators": [
                             {
                                 "from": {
@@ -756,7 +761,7 @@
                         ]
                     },
                     {
-                        "desrciption": "Ergodox Compat",
+                        "description": "Ergodox Compat",
                         "manipulators": [
                             {
                                 "description": "F13 -> Chrome",
