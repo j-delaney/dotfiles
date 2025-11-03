@@ -45,7 +45,7 @@ symlink git/config.user "$HOME/.config/git/config.user"
 
 # Karabiner
 set_color --bold; echo "# Karabiner"; set_color normal
-symlink karabiner/karabiner.json "$HOME/.config/karabiner/karabiner.json"
+ln -s -i "$dotfiles_dir/karabiner" ~/.config # https://karabiner-elements.pqrs.org/docs/manual/misc/configuration-file-path/
 
 # Hammerspoon
 set_color --bold; echo "# Hammerspoon"; set_color normal
