@@ -168,10 +168,33 @@
                                 ],
                                 "description": "5 -> Slack",
                                 "from": {
-                                    "key_code": "5",
-                                    "modifiers": { "optional": ["any"] }
+                                    "key_code": "5"
                                 },
                                 "to": [{ "shell_command": "open -a \"/Applications/Slack.app\"" }],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "name": "caps_lock pressed",
+                                        "type": "variable_if",
+                                        "value": 1
+                                    }
+                                ],
+                                "description": "Shift+5 -> Zoom",
+                                "from": {
+                                    "key_code": "5",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [
+                                    {
+                                        "software_function": {
+                                            "open_application": {
+                                                "file_path": "/Applications/zoom.us.app"
+                                            }
+                                        }
+                                    }
+                                ],
                                 "type": "basic"
                             },
                             {
@@ -695,7 +718,7 @@
                         ]
                     },
                     {
-                        "description": "Ergodox Compat",
+                        "description": "Ergodox Hyper Applications",
                         "manipulators": [
                             {
                                 "description": "F13 -> Chrome",
@@ -734,6 +757,23 @@
                                 "description": "F17 -> Slack",
                                 "from": { "key_code": "f17" },
                                 "to": [{ "shell_command": "open -a \"/Applications/Slack.app\"" }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Shift+F17 -> Zoom",
+                                "from": {
+                                    "key_code": "f17",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [
+                                    {
+                                        "software_function": {
+                                            "open_application": {
+                                                "file_path": "/Applications/zoom.us.app"
+                                            }
+                                        }
+                                    }
+                                ],
                                 "type": "basic"
                             },
                             {
