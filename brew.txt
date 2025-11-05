@@ -13,6 +13,7 @@ hyperfine
 jq
 ncdu
 pstree
+readline
 ripgrep
 shellcheck
 the_silver_searcher
@@ -20,4 +21,3 @@ tldr
 tmux
 watch
 yq
-readline
