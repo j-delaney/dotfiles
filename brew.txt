@@ -4,6 +4,7 @@ diffutils
 dust
 findutils
 fish
+fzf
 gawk
 gh
 go-size-analyzer
@@ -21,3 +22,4 @@ tldr
 tmux
 watch
 yq
+zoxide
