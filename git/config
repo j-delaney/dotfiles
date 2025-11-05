@@ -18,6 +18,18 @@
 	preloadindex = true
 
 	deltabasecachelimit = 4g
+	pager = delta
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true  # use n and N to move between diff sections
+	dark = true
+	diff-so-fancy = true
+
+[merge]
+	conflictStyle = zdiff3
 
 [help]
 	# Automatically correct and execute mistyped commands such as `git stauts`

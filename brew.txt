@@ -7,6 +7,7 @@ fish
 fzf
 gawk
 gh
+git-delta
 go
 go-size-analyzer
 grpcurl
