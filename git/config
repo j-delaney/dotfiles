@@ -20,6 +20,9 @@
 	deltabasecachelimit = 4g
 	pager = delta
 
+[diff]
+	algorithm = "histogram"
+
 [interactive]
 	diffFilter = delta --color-only
 
