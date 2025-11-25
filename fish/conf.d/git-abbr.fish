@@ -20,7 +20,6 @@ abbr --add gprop 'git pull --rebase origin master-passing-tests'
 abbr --add guar "git undo; and git add .; and git redo"
 
 abbr --add grs "git restore --staged"
-abbr --add grs "git restore --staged"
 
 # Checkout
 abbr --add gco "git checkout"
