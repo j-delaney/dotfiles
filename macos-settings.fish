@@ -26,7 +26,7 @@ defaults write com.apple.finder FXDefaultSearchScope -string "SCcf" # When perfo
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv" # Use list view in all Finder windows by default
 
 # Dock settings
-defaults write com.apple.dock autohide-delay -float 0.0
+defaults write com.apple.dock autohide-delay -float 1
 defaults write com.apple.dock autohide-time-modifier -float 0.25
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock expose-animation-duration -float 0.0
