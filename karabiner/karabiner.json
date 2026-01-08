@@ -78,6 +78,7 @@
                     },
                     {
                         "description": "Hyper Mouse",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "conditions": [
@@ -205,9 +206,7 @@
                                     }
                                 ],
                                 "description": "2 -> IntelliJ IDEA",
-                                "from": {
-                                    "key_code": "2"
-                                },
+                                "from": { "key_code": "2" },
                                 "to": [{ "shell_command": "open -a \"/Applications/IntelliJ IDEA.app\"" }],
                                 "type": "basic"
                             },
@@ -268,9 +267,7 @@
                                     }
                                 ],
                                 "description": "5 -> Slack",
-                                "from": {
-                                    "key_code": "5"
-                                },
+                                "from": { "key_code": "5" },
                                 "to": [{ "shell_command": "open -a \"/Applications/Slack.app\"" }],
                                 "type": "basic"
                             },
@@ -287,15 +284,7 @@
                                     "key_code": "5",
                                     "modifiers": { "mandatory": ["shift"] }
                                 },
-                                "to": [
-                                    {
-                                        "software_function": {
-                                            "open_application": {
-                                                "file_path": "/Applications/zoom.us.app"
-                                            }
-                                        }
-                                    }
-                                ],
+                                "to": [{ "software_function": { "open_application": { "file_path": "/Applications/zoom.us.app" } } }],
                                 "type": "basic"
                             },
                             {
@@ -866,15 +855,7 @@
                                     "key_code": "f17",
                                     "modifiers": { "mandatory": ["shift"] }
                                 },
-                                "to": [
-                                    {
-                                        "software_function": {
-                                            "open_application": {
-                                                "file_path": "/Applications/zoom.us.app"
-                                            }
-                                        }
-                                    }
-                                ],
+                                "to": [{ "software_function": { "open_application": { "file_path": "/Applications/zoom.us.app" } } }],
                                 "type": "basic"
                             },
                             {
