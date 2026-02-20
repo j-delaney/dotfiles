@@ -5,11 +5,17 @@ abbr --add codef "code ~/.config/fish/"
 # Git
 abbr --add ga "git add"
 abbr --add gst "git status"
+
+# Commit
 abbr --add gc "git commit --verbose"
 abbr --add gca "git commit --all --verbose"
 abbr --add gcm "git commit -m"
 abbr --add gcam "git commit --all -m"
 abbr --add gcaa "git commit --all --amend"
+
+# Push
+abbr --add gp "git push"
+abbr --add gpu "git push -u origin"
 
 abbr --add glog 'git log --oneline --decorate --graph'
 abbr --add glog10 'git log --oneline --decorate --graph HEAD~10..HEAD'
@@ -20,6 +26,13 @@ abbr --add gprop 'git pull --rebase origin master-passing-tests'
 abbr --add guar "git undo; and git add .; and git redo"
 
 abbr --add grs "git restore --staged"
+
+# Stash
+abbr --add gss "git stash"
+abbr --add gsp "git stash pop"
+
+# Rebase
+abbr --add grbc "git rebase --continue"
 
 # Checkout
 abbr --add gco "git checkout"
