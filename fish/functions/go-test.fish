@@ -1,13 +1,15 @@
 function go-test
-    switch $argv[1]
-    case 'master'
+    argparse master parent -- $argv
+    or return
+
+    if set -q _flag_master
         set -f changed_files (files-changed master)
-    case 'parent'
+    else if set -q _flag_parent
         set -f changed_files (files-changed parent)
-    case '' '*'
+    else
         set -f changed_files (files-changed commit)
     end
-    
+
     set -f targets
     for target in $changed_files
         if test (ls $target | ag '_test\.go$' >/dev/null 2>&1; echo $status) -eq 0
@@ -17,7 +19,6 @@ function go-test
         end
     end
 
-    set -f args $argv[2..-1]
-    echo "Running: go test $args $targets"
-    go test $args $targets
+    echo "Running: go test $targets"
+    go test $targets
 end
