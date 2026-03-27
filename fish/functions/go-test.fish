@@ -77,8 +77,6 @@ function go-test
                     go build $rdep_build_targets
                     or return
                 end
-            else
-                echo "Skipping $target because $rdeps_file did not exist"
             end
         end
     else
