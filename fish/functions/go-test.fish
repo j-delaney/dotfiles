@@ -20,18 +20,28 @@ function go-test
         set -f changed_files (files-changed commit)
     end
 
-    set -f targets
+    set -f all_targets
+    set -f test_targets
+    set -f build_targets
     for target in $changed_files
+        set all_targets $all_targets "./$target"
+
         if test (ls $target | ag '_test\.go$' >/dev/null 2>&1; echo $status) -eq 0
-            set targets $targets "./$target"
+            set test_targets $test_targets "./$target"
         else
-            echo "Skipping $target: no tests found"
+            set build_targets $build_targets "./$target"
         end
     end
 
-    echo "Running direct tests"
-    go test $targets
+    echo "Running "(count $test_targets)" direct tests"
+    go test $test_targets
     or return
+
+    if test (count $build_targets) -gt 0
+        echo "Building "(count $build_targets)" direct packages with no tests"
+        go build $build_targets
+        or return
+    end
 
     if set -q _flag_skip_jdome
         return 0
@@ -45,7 +55,7 @@ function go-test
         end
 
         set -f module (head -n 1 go.mod | awk '{print $2}')
-        for target in $targets
+        for target in $all_targets
             set -f rdeps_file "$JDOME_PATH/$module/$target.rdeps"
             if test -e "$rdeps_file"
                 set -f rdep_targets (awk '$1 > '$jdome_depth' { next } {print $2}' $rdeps_file | sed "s|^$module|.|")
