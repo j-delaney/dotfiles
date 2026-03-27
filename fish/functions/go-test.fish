@@ -33,6 +33,14 @@ function go-test
         end
     end
 
+    set_color -o; echo "Running gazelle on "(count $all_targets)" packages"; set_color normal
+    ~/stripe/gocode/bin/gazelle $all_targets
+    or return
+
+    set_color -o; echo "Running goimports on "(count $all_targets)" packages"; set_color normal
+    ~/stripe/gocode/bin/goimports $all_targets
+    or return
+
     set_color -o; echo "Running "(count $test_targets)" direct tests"; set_color normal
     go test $test_targets
     or return
