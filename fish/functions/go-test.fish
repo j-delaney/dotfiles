@@ -58,9 +58,25 @@ function go-test
         for target in $all_targets
             set -f rdeps_file "$JDOME_PATH/$module/$target.rdeps"
             if test -e "$rdeps_file"
-                set -f rdep_targets (awk '$1 > '$jdome_depth' { next } {print $2}' $rdeps_file | sed "s|^$module|.|")
-                set_color -o; echo "Running "(count $rdep_targets)" indirect tests for $target"; set_color normal
-                go test $rdep_targets
+                set -f rdep_test_targets
+                set -f rdep_build_targets
+                for rdep in (awk '$1 > '$jdome_depth' { next } {print $2}' $rdeps_file | sed "s|^$module|.|")
+                    if test (ls $rdep | ag '_test\.go$' >/dev/null 2>&1; echo $status) -eq 0
+                        set rdep_test_targets $rdep_test_targets $rdep
+                    else
+                        set rdep_build_targets $rdep_build_targets $rdep
+                    end
+                end
+                if test (count $rdep_test_targets) -gt 0
+                    set_color -o; echo "Running "(count $rdep_test_targets)" indirect tests for $target"; set_color normal
+                    go test $rdep_test_targets
+                    or return
+                end
+                if test (count $rdep_build_targets) -gt 0
+                    set_color -o; echo "Building "(count $rdep_build_targets)" indirect packages with no tests for $target"; set_color normal
+                    go build $rdep_build_targets
+                    or return
+                end
             else
                 echo "Skipping $target because $rdeps_file did not exist"
             end
