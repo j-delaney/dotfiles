@@ -33,12 +33,12 @@ function go-test
         end
     end
 
-    echo "Running "(count $test_targets)" direct tests"
+    set_color -o; echo "Running "(count $test_targets)" direct tests"; set_color normal
     go test $test_targets
     or return
 
     if test (count $build_targets) -gt 0
-        echo "Building "(count $build_targets)" direct packages with no tests"
+        set_color -o; echo "Building "(count $build_targets)" direct packages with no tests"; set_color normal
         go build $build_targets
         or return
     end
@@ -59,7 +59,7 @@ function go-test
             set -f rdeps_file "$JDOME_PATH/$module/$target.rdeps"
             if test -e "$rdeps_file"
                 set -f rdep_targets (awk '$1 > '$jdome_depth' { next } {print $2}' $rdeps_file | sed "s|^$module|.|")
-                echo "Running "(count $rdep_targets)" indirect tests for $target"
+                set_color -o; echo "Running "(count $rdep_targets)" indirect tests for $target"; set_color normal
                 go test $rdep_targets
             else
                 echo "Skipping $target because $rdeps_file did not exist"
