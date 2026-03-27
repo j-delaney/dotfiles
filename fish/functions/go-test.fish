@@ -49,7 +49,7 @@ function go-test
             set -f rdeps_file "$JDOME_PATH/$module/$target.rdeps"
             if test -e "$rdeps_file"
                 set -f rdep_targets (awk '$1 > '$jdome_depth' { next } {print $2}' $rdeps_file | sed "s|^$module|.|")
-                echo "Running "(count $rdep_targets)"indirect tests for $target"
+                echo "Running "(count $rdep_targets)" indirect tests for $target"
                 go test $rdep_targets
             else
                 echo "Skipping $target because $rdeps_file did not exist"
