@@ -47,7 +47,7 @@ function go-test
 
     if test (count $build_targets) -gt 0
         set_color -o; echo "Building "(count $build_targets)" direct packages with no tests"; set_color normal
-        go build -v -o /dev/null $build_targets
+        go build -o /dev/null $build_targets
         or return
     end
 
@@ -82,7 +82,7 @@ function go-test
                 end
                 if test (count $rdep_build_targets) -gt 0
                     set_color -o; echo "Building "(count $rdep_build_targets)" indirect packages with no tests for $target"; set_color normal
-                    go build -v -o /dev/null $rdep_build_targets
+                    go build -o /dev/null $rdep_build_targets
                     or return
                 end
             end
