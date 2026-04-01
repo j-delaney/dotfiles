@@ -1,3 +1,7 @@
+# go-test is a helper to test (or just build if there are no tests) all
+# packages that have been changed since the last commit, since the parent
+# branch, or since master. If jdome is setup it will also do the same for
+# the reverse-transitive dependencies up to a given depth (default of 1).
 function go-test
     argparse 'help' 'master' 'parent' 'skip-jdome' 'depth=?' -- $argv
     or return
