@@ -72,38 +72,41 @@ function go-test
         end
 
         set -f handled_targets $all_targets
+        set -f all_rdep_test_targets
+        set -f all_rdep_build_targets
         set -f module (head -n 1 go.mod | awk '{print $2}')
+
+        set_color -o; echo "Discovering indirect targets"; set_color normal
         for target in $all_targets
             set -f rdeps_file "$JDOME_PATH/$module/$target.rdeps"
             if test -e "$rdeps_file"
-                set -f rdep_test_targets
-                set -f rdep_build_targets
                 for rdep in (awk '$1 > '$jdome_depth' { next } {print $2}' $rdeps_file | sed "s|^$module|.|")
                     if contains -- $rdep $handled_targets
                         continue
                     end
                     set handled_targets $handled_targets $rdep
-                    
+                    echo $rdep
+
                     if test (ls $rdep | ag '_test\.go$' >/dev/null 2>&1; echo $status) -eq 0
-                        set rdep_test_targets $rdep_test_targets $rdep
+                        set all_rdep_test_targets $all_rdep_test_targets $rdep
                     else
-                        set rdep_build_targets $rdep_build_targets $rdep
+                        set all_rdep_build_targets $all_rdep_build_targets $rdep
                     end
                 end
-
-                if test (count $rdep_test_targets) -gt 0
-                    set_color -o; echo "Running "(count $rdep_test_targets)" indirect tests for $target"; set_color normal
-                    go test $rdep_test_targets
-                    or return
-                    set total_tested (math $total_tested + (count $rdep_test_targets))
-                end
-                if test (count $rdep_build_targets) -gt 0
-                    set_color -o; echo "Building "(count $rdep_build_targets)" indirect packages with no tests for $target"; set_color normal
-                    go build -o /dev/null $rdep_build_targets
-                    or return
-                    set total_built (math $total_built + (count $rdep_build_targets))
-                end
             end
+        end
+
+        if test (count $all_rdep_test_targets) -gt 0
+            set_color -o; echo "Running "(count $all_rdep_test_targets)" indirect tests"; set_color normal
+            go test $all_rdep_test_targets
+            or return
+            set total_tested (math $total_tested + (count $all_rdep_test_targets))
+        end
+        if test (count $all_rdep_build_targets) -gt 0
+            set_color -o; echo "Building "(count $all_rdep_build_targets)" indirect packages with no tests"; set_color normal
+            go build -o /dev/null $all_rdep_build_targets
+            or return
+            set total_built (math $total_built + (count $all_rdep_build_targets))
         end
     else
         echo "Skipping rdep tests because JDOME_PATH is not defined"
