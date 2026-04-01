@@ -44,10 +44,12 @@ function go-test
     set -f total_tested 0
     set -f total_built 0
 
-    set_color -o; echo "Running "(count $test_targets)" direct tests"; set_color normal
-    go test $test_targets
-    or return
-    set total_tested (math $total_tested + (count $test_targets))
+    if test (count $test_targets) -gt 0
+        set_color -o; echo "Running "(count $test_targets)" direct tests"; set_color normal
+        go test $test_targets
+        or return
+        set total_tested (math $total_tested + (count $test_targets))
+    end
 
     if test (count $build_targets) -gt 0
         set_color -o; echo "Building "(count $build_targets)" direct packages with no tests"; set_color normal
