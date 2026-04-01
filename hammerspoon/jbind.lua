@@ -65,6 +65,12 @@ local function cleanTitle(log, title, url)
         return newTitle
     end
 
+    newTitle, n = title:gsub(" %- J Delaney %- Confluence", "")
+    if n > 0 then
+        log("cleanTitle", {type="jdelaney-confluence", title = title, newTitle = newTitle})
+        return newTitle
+    end
+
     if starts_with(url, "https://git.corp.stripe.com") and url:find("/blob/") then
         -- Turn a title like "gopiori/aws_access.go0a49f269a9a8834a8620d5fb5f78ec483872d1e · apiori/gopiori" into "gopiori/aws_access.go · apiori/gopiori"
         newTitle, n = title:gsub(" at %g+", "")
