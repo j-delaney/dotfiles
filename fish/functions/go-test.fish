@@ -62,6 +62,7 @@ function go-test
             set jdome_depth $_flag_depth
         end
 
+        set -f handled_targets $all_targets
         set -f module (head -n 1 go.mod | awk '{print $2}')
         for target in $all_targets
             set -f rdeps_file "$JDOME_PATH/$module/$target.rdeps"
@@ -69,12 +70,18 @@ function go-test
                 set -f rdep_test_targets
                 set -f rdep_build_targets
                 for rdep in (awk '$1 > '$jdome_depth' { next } {print $2}' $rdeps_file | sed "s|^$module|.|")
+                    if contains -- $rdep $handled_targets
+                        continue
+                    end
+                    set handled_targets $handled_targets $rdep
+                    
                     if test (ls $rdep | ag '_test\.go$' >/dev/null 2>&1; echo $status) -eq 0
                         set rdep_test_targets $rdep_test_targets $rdep
                     else
                         set rdep_build_targets $rdep_build_targets $rdep
                     end
                 end
+
                 if test (count $rdep_test_targets) -gt 0
                     set_color -o; echo "Running "(count $rdep_test_targets)" indirect tests for $target"; set_color normal
                     go test $rdep_test_targets
