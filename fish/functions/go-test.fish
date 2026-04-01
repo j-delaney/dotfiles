@@ -41,17 +41,24 @@ function go-test
     ~/stripe/gocode/bin/goimports $all_targets
     or return
 
+    set -f total_tested 0
+    set -f total_built 0
+
     set_color -o; echo "Running "(count $test_targets)" direct tests"; set_color normal
     go test $test_targets
     or return
+    set total_tested (math $total_tested + (count $test_targets))
 
     if test (count $build_targets) -gt 0
         set_color -o; echo "Building "(count $build_targets)" direct packages with no tests"; set_color normal
         go build -o /dev/null $build_targets
         or return
+        set total_built (math $total_built + (count $build_targets))
     end
 
     if set -q _flag_skip_jdome
+        echo ""
+        set_color -o; echo "Done: $total_tested tested, $total_built built"; set_color normal
         return 0
     end
 
@@ -86,15 +93,20 @@ function go-test
                     set_color -o; echo "Running "(count $rdep_test_targets)" indirect tests for $target"; set_color normal
                     go test $rdep_test_targets
                     or return
+                    set total_tested (math $total_tested + (count $rdep_test_targets))
                 end
                 if test (count $rdep_build_targets) -gt 0
                     set_color -o; echo "Building "(count $rdep_build_targets)" indirect packages with no tests for $target"; set_color normal
                     go build -o /dev/null $rdep_build_targets
                     or return
+                    set total_built (math $total_built + (count $rdep_build_targets))
                 end
             end
         end
     else
         echo "Skipping rdep tests because JDOME_PATH is not defined"
     end
+
+    echo ""
+    set_color -o; echo "Done: $total_tested tested, $total_built built"; set_color normal
 end
