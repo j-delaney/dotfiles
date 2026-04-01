@@ -109,8 +109,8 @@ end
 local function copyTitleAsLink(log)
     local title, url = getActiveChromeTabData(log)
     title = cleanTitle(log, title, url)
-    title = escape(title)
-    local html = htmlLinkForTitleAndURL(title, url)
+    local escapedTitle = escape(title)
+    local html = htmlLinkForTitleAndURL(escapedTitle, url)
     local data = {
         ["Apple HTML pasteboard type"] = html,
         ["public.html"] = html,
