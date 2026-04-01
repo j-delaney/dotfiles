@@ -33,11 +33,11 @@ function go-test
         end
     end
 
-    set_color -o; echo "Running gazelle on "(count $all_targets)" packages"; set_color normal
+    echo-bold "Running gazelle on "(count $all_targets)" packages"
     ~/stripe/gocode/bin/gazelle $all_targets
     or return
 
-    set_color -o; echo "Running goimports on "(count $all_targets)" packages"; set_color normal
+    echo-bold "Running goimports on "(count $all_targets)" packages"
     ~/stripe/gocode/bin/goimports $all_targets
     or return
 
@@ -45,14 +45,14 @@ function go-test
     set -f total_built 0
 
     if test (count $test_targets) -gt 0
-        set_color -o; echo "Running "(count $test_targets)" direct tests"; set_color normal
+        echo-bold "Running "(count $test_targets)" direct tests"
         go test $test_targets
         or return
         set total_tested (math $total_tested + (count $test_targets))
     end
 
     if test (count $build_targets) -gt 0
-        set_color -o; echo "Building "(count $build_targets)" direct packages with no tests"; set_color normal
+        echo-bold "Building "(count $build_targets)" direct packages with no tests"
         go build -o /dev/null $build_targets
         or return
         set total_built (math $total_built + (count $build_targets))
@@ -60,7 +60,7 @@ function go-test
 
     if set -q _flag_skip_jdome
         echo ""
-        set_color -o; echo "Done: $total_tested tested, $total_built built"; set_color normal
+        echo-bold "Done: $total_tested tested, $total_built built"
         return 0
     end
 
@@ -76,7 +76,7 @@ function go-test
         set -f all_rdep_build_targets
         set -f module (head -n 1 go.mod | awk '{print $2}')
 
-        set_color -o; echo "Discovering indirect targets"; set_color normal
+        echo-bold "Discovering indirect targets"
         for target in $all_targets
             set -f rdeps_file "$JDOME_PATH/$module/$target.rdeps"
             if test -e "$rdeps_file"
@@ -97,13 +97,13 @@ function go-test
         end
 
         if test (count $all_rdep_test_targets) -gt 0
-            set_color -o; echo "Running "(count $all_rdep_test_targets)" indirect tests"; set_color normal
+            echo-bold "Running "(count $all_rdep_test_targets)" indirect tests"
             go test $all_rdep_test_targets
             or return
             set total_tested (math $total_tested + (count $all_rdep_test_targets))
         end
         if test (count $all_rdep_build_targets) -gt 0
-            set_color -o; echo "Building "(count $all_rdep_build_targets)" indirect packages with no tests"; set_color normal
+            echo-bold "Building "(count $all_rdep_build_targets)" indirect packages with no tests"
             go build -o /dev/null $all_rdep_build_targets
             or return
             set total_built (math $total_built + (count $all_rdep_build_targets))
@@ -113,5 +113,5 @@ function go-test
     end
 
     echo ""
-    set_color -o; echo "Done: $total_tested tested, $total_built built"; set_color normal
+    echo-bold "Done: $total_tested tested, $total_built built"
 end
