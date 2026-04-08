@@ -1,9 +1,9 @@
 function files-changed
     switch $argv[1]
     case 'master'
-        set -f changed_files (git files-since-master)
+        set -f changed_files (git diff --relative --name-only (git merge-base HEAD origin/master) --diff-filter=d)
     case 'parent'
-        set -f changed_files (git files-since-parent)
+        set -f changed_files (git diff --relative --name-only (git merge-base HEAD (git-parent)) --diff-filter=d)
     case 'commit'
         set -f changed_files (git status --porcelain | awk '{print $2}')
     case '*'
