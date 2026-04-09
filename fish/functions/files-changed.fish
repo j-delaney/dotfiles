@@ -5,7 +5,7 @@ function files-changed
     case 'parent'
         set -f changed_files (git diff --relative --name-only (git merge-base HEAD (git-parent)) --diff-filter=d)
     case 'commit'
-        set -f changed_files (git status --porcelain | awk '{print $2}')
+        set -f changed_files (git diff --relative --name-only --diff-filter=d)
     case '*'
         echo "Must specify (master|parent|commit)"
         return 1
